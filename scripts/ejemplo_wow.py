@@ -1,4 +1,4 @@
-def make_chart():
+def make_chart(width=800, height=600):
     import pandas as pd
     from ipyvizzu import Chart, Data, Config, Style, DisplayTarget
     
@@ -43,15 +43,19 @@ def make_chart():
                     + " #ee7c34FF #efae3aFF"
                 },
             },
+            "title": {
+                "fontSize": 20,
+            }
         }
     )
      
-    chart = Chart(display=DisplayTarget.MANUAL)
+    chart = Chart(width=width, height=height, display=DisplayTarget.MANUAL)
+    #chart = Chart(display=DisplayTarget.MANUAL)
      
     chart.animate(data, style)
      
     for year in range(1973, 2021):
-        config["title"] = f"Music Revenue by Format - Year by Year {year}"
+        config["title"] = f"Ingresos anuales de la industria musical en EEU según formato - {year}"
         chart.animate(
             Data.filter(f"parseInt(record.Year) == {year}"),
             Config(config),
@@ -77,7 +81,7 @@ def make_chart():
      
     chart.animate(
         Data.filter("record.Year == '2020' || record.Year == '1972'"),
-        Config({"title": "Lets see the total of the last 47 years"}),
+        Config({"title": "Veamos el total de los últimos 47 años"}),
         duration=2,
     )
      
@@ -131,7 +135,7 @@ def make_chart():
                     },
                     "color": {"set": ["Format"]},
                 },
-                "title": "Music Revenue by Format in the USA 1973 - 2020",
+                "title": "Ingresos industria musical en EEU según formato 1973 - 2020",
                 "split": True,
             }
         ),
@@ -174,5 +178,4 @@ def make_chart():
         Style({"plot.marker.borderWidth": 1}),
         duration=1,
     )
-    print("Hmmm")
     return chart
